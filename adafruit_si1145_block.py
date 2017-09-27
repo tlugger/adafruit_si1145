@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Author: Joe Gutting
 # With use of Adafruit SI1145 library for Arduino, Adafruit_GPIO.I2C & BMP Library by Tony DiCola
 #
@@ -21,39 +19,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-# Can enable debug output by uncommenting:
-#import logging
-#logging.basicConfig(level=logging.DEBUG)
+from nio.block.base import Block
+from nio.properties import VersionPropertyd
+from nio.signal.base import Signal
 
-import time
+
 import SI1145.SI1145 as SI1145
 
+class AdafruitSI1145(Block):
 
-# Default constructor will pick a default I2C bus.
-#
-# For the Raspberry Pi this means you should hook up to the only exposed I2C bus
-# from the main GPIO header and the library will figure out the bus number based
-# on the Pi's revision.
-#
-# For the Beaglebone Black the library will assume bus 1 by default, which is
-# exposed with I2C1_SCL = P9_17 and I2C1_SDA = P9_18
-# Header pinout: http://beagleboard.org/static/images/cape-headers-i2c.png
-# Configure the pins for I2C with these pins:
-#   sudo config-pin p9.17 i2c
-#   sudo config-pin p9.18 i2c
+    def __init__(self):
+            super().__init__()
+            self.sensor = SI1145.SI1145()
 
-sensor = SI1145.SI1145()
-
-print('Press Cntrl + Z to cancel')
-
-while True:
-        vis = sensor.readVisible()
-        IR = sensor.readIR()
-        UV = sensor.readUV()
-        uvIndex = UV / 100.0
-        print('Vis:             ' + str(vis))
-        print('IR:              ' + str(IR))
-        print('UV Index:        ' + str(uvIndex))
-
-        time.sleep(.2)
-
+    def process_signals(self, signals):
+        for signal in signals:
+            uv = self.sensor.readUV()
+            uvIndex = uv / 100.0
+            self.notify_signals([Signal({"vis": self.sensor.readVisible(),
+                                     "ir": self.sensor.readIR(),
+                                     "uv_index": uvIndex})])
