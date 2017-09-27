@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 
 from nio.block.base import Block
-from nio.properties import VersionPropertyd
+from nio.properties import VersionProperty
 from nio.signal.base import Signal
 
 
