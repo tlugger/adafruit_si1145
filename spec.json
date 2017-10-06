@@ -1,40 +1,21 @@
 {
-  "namespace/BlockName": {
-    "version": "1.0.0",
-    "description": "Description of the block.",
-    "properties": {
-      "<property1>": {
-        "description": "Required description of the property"
-      },
-      "<property2>": {
-        "default": "Optional metadata with any key.",
-        "description": "Required description of the property"
-      }
-    },
+  "nio/AdafruitSI1145": {
+    "version": "0.1.0",
+    "description": "A block for reading data from the Adafruit SI1145 UV sensor through the Raspberry Pi I2C bus.",
+    "categories": [
+      "hardware"
+    ],
+    "properties": {},
     "inputs": {
-      "<input1 | default>": {
-        "description": "Required description of the input",
-      },
-      "<input2>": {
-        "description": "Required description of the input"
+      "default": {
+        "description": ""
       }
     },
     "outputs": {
-      "<output1 | default>": {
-        "description": "Required description of the output",
-      },
-      "<output2>": {
-        "description": "Required description of the output"
+      "default": {
+        "description": "Signal with 'vis', 'ir', and 'uv_index' values read from the sensor."
       }
     },
-    "commands": {
-      "<command1>": {
-        "description": "Required description of the command",
-        "type": "Optional type and other metadata with any key."
-      },
-      "<command2>": {
-        "description": "Required description of the command"
-      }
-    }
+    "commands": {}
   }
 }
